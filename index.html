@@ -27,6 +27,8 @@
             cursor: pointer;
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
+
 </head>
 <body>
     <form class="container" onsubmit="event.preventDefault(); saveFile();">
@@ -59,25 +61,31 @@
             'Email: ' + email.value + ' \r\n ' + 
             'Message: ' + msg.value;
         
-        // Convert the text to BLOB.
-        const textToBLOB = new Blob([data], { type: 'text/plain' });
-        const sFileName = 'formData.txt';	   // The file to save the data.
+        // // Convert the text to BLOB.
+        // const textToBLOB = new Blob([data], { type: 'text/plain' });
+        // const sFileName = 'formData.txt';	   // The file to save the data.
 
-        let newLink = document.createElement("a");
-        newLink.download = sFileName;
+        // let newLink = document.createElement("a");
+        // newLink.download = sFileName;
 
-        if (window.webkitURL != null) {
-            newLink.href = window.webkitURL.createObjectURL(textToBLOB);
-        }
-        else {
-            newLink.href = window.URL.createObjectURL(textToBLOB);
-            newLink.style.display = "none";
-            document.body.appendChild(newLink);
-        }
+        // if (window.webkitURL != null) {
+        //     newLink.href = window.webkitURL.createObjectURL(textToBLOB);
+        // }
+        // else {
+        //     newLink.href = window.URL.createObjectURL(textToBLOB);
+        //     newLink.style.display = "none";
+        //     document.body.appendChild(newLink);
+        // }
 
-        newLink.click(); 
+        // newLink.click(); 
+
+
+        var doc = new jsPDF();
+        doc.text(10, 10, data);
+        doc.save('data.pdf');
     }
 
 
 </script>
+
 </html>
