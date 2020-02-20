@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Exporting to Text file</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        .container{
+            margin: 2em;
+        }
+    	div {
+            padding: 10px;
+            background-color: #f6f6f6;
+            overflow: hidden;
+        }
+    	input[type=text], input[type=email], textarea, select {
+            font: 1em;
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type=submit]{ 
+            font: 20px;
+            float: right;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <form class="container" onsubmit="event.preventDefault(); saveFile();">
+        <div>
+            <input type="text" id="txtName" placeholder="Enter your name" required/>
+        </div>
+        <div>
+            <input type="email" id="txtEmail" placeholder="Enter your email address" required/>
+        </div>
+        <div>
+            <textarea id="msg" name="msg" placeholder="Write some message ..." style="height:100px"></textarea>
+        </div>
+        <div>
+            <input type="submit" id="bt" value="Save data to file" />
+        </div>
+
+    </form>
+</body>
+<script>
+    let saveFile = () => {
+    	
+        // Get the data from each element on the form.
+    	let name = document.getElementById('txtName');
+        let email = document.getElementById('txtEmail');
+        let msg = document.getElementById('msg');
+        
+        // This variable stores all the data.
+        let data = 
+            '\r Name: ' + name.value + ' \r\n ' + 
+            'Email: ' + email.value + ' \r\n ' + 
+            'Message: ' + msg.value;
+        
+        // Convert the text to BLOB.
+        const textToBLOB = new Blob([data], { type: 'text/plain' });
+        const sFileName = 'formData.txt';	   // The file to save the data.
+
+        let newLink = document.createElement("a");
+        newLink.download = sFileName;
+
+        if (window.webkitURL != null) {
+            newLink.href = window.webkitURL.createObjectURL(textToBLOB);
+        }
+        else {
+            newLink.href = window.URL.createObjectURL(textToBLOB);
+            newLink.style.display = "none";
+            document.body.appendChild(newLink);
+        }
+
+        newLink.click(); 
+    }
+
+
+</script>
+</html>
